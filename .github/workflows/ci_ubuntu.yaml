@@ -97,7 +97,7 @@ jobs:
             -DVERBOSE_CONFIGURE=ON \
             -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
             -D${{ matrix.qbt_gui }}
-          cmake --build --target qbt_update_translations
+          cmake --build build --target qbt_update_translations
           cmake --build build
           cmake --build build --target check
           DESTDIR="qbittorrent" cmake --install build
