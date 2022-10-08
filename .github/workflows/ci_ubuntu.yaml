@@ -58,9 +58,10 @@ jobs:
             -G "Ninja" \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+            -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
             -Ddeprecated-functions=OFF
-          cmake -v --build build
-          sudo cmake -v --install build
+          cmake --build build
+          sudo cmake --install build
 
       - name: Build qBittorrent (Qt5)
         if: ${{ startsWith(matrix.qt_version, 5) }}
@@ -74,11 +75,12 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="/usr" \
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
+            -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
             -D${{ matrix.qbt_gui }}
-          cmake -v --build build --target qbt_update_translations
-          cmake -v --build build
-          cmake -v --build build --target chec
-          DESTDIR="qbittorrent" cmake -v --install build
+          cmake --build build --target qbt_update_translations
+          cmake --build build
+          cmake --build build --target chec
+          DESTDIR="qbittorrent" cmake --install build
 
       - name: Build qBittorrent (Qt6)
         if: ${{ startsWith(matrix.qt_version, 6) }}
@@ -93,11 +95,12 @@ jobs:
             -DQT6=ON \
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
+            -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
             -D${{ matrix.qbt_gui }}
-          cmake -v --build --target qbt_update_translations
-          cmake -v --build build
-          cmake -v  --build build --target check
-          DESTDIR="qbittorrent" cmake -v --install build
+          cmake --build --target qbt_update_translations
+          cmake --build build
+          cmake --build build --target check
+          DESTDIR="qbittorrent" cmake --install build
 
       - name: Prepare build artifacts
         run: |
