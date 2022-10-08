@@ -59,8 +59,8 @@ jobs:
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -Ddeprecated-functions=OFF
-          cmake --build build --verbose=1
-          sudo cmake --install build --verbose=1
+          cmake -v --build build
+          sudo cmake -v --install build
 
       - name: Build qBittorrent (Qt5)
         if: ${{ startsWith(matrix.qt_version, 5) }}
@@ -75,10 +75,10 @@ jobs:
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
             -D${{ matrix.qbt_gui }}
-          cmake --build build --target qbt_update_translations --verbose=1
-          cmake --build build --verbose=1
-          cmake --build build --target check --verbose=1
-          DESTDIR="qbittorrent" cmake --install build --verbose=1
+          cmake -v --build build --target qbt_update_translations
+          cmake -v --build build
+          cmake -v --build build --target chec
+          DESTDIR="qbittorrent" cmake -v --install build
 
       - name: Build qBittorrent (Qt6)
         if: ${{ startsWith(matrix.qt_version, 6) }}
@@ -94,10 +94,10 @@ jobs:
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
             -D${{ matrix.qbt_gui }}
-          cmake --build --target qbt_update_translations --verbose=1
-          cmake --build build --verbose=1
-          cmake --build build --target check --verbose=1
-          DESTDIR="qbittorrent" cmake --install build --verbose=1
+          cmake -v --build --target qbt_update_translations
+          cmake -v --build build
+          cmake -v  --build build --target check
+          DESTDIR="qbittorrent" cmake -v --install build
 
       - name: Prepare build artifacts
         run: |
