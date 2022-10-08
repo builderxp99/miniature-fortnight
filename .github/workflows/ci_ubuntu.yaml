@@ -1,6 +1,6 @@
 name: CI - Ubuntu
 
-on: [pull_request, push]
+on: workflow_dispatch
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -59,7 +59,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -Ddeprecated-functions=OFF
-          cmake --build --verbose build
+          cmake --build build --verbose
           sudo cmake --install build
 
       - name: Build qBittorrent (Qt5)
@@ -75,9 +75,9 @@ jobs:
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
             -D${{ matrix.qbt_gui }}
-          cmake --build --verbose build --target qbt_update_translations
-          cmake --build --verbose build
-          cmake --build --verbose build --target check
+          cmake --build build --target qbt_update_translations --verbose
+          cmake --build build --verbose
+          cmake --build build --target check --verbose
           DESTDIR="qbittorrent" cmake --install build
 
       - name: Build qBittorrent (Qt6)
@@ -94,8 +94,8 @@ jobs:
             -DTESTING=ON \
             -DVERBOSE_CONFIGURE=ON \
             -D${{ matrix.qbt_gui }}
-          cmake --build --verbose --target qbt_update_translations
-          cmake --build --verbose build
+          cmake --build --target qbt_update_translations --verbose
+          cmake --build build --verbose
           cmake --build build --target check --verbose
           DESTDIR="qbittorrent" cmake --install build
 
